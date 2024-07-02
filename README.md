@@ -185,13 +185,13 @@ If you encounter the "Unauthorized" error when trying to access your EKS cluster
 1. **Check IAM Access Entry in EKS Cluster**
 
    - Navigate to the EKS Console and select your cluster.
-   - Go to the `Access` section and check the IAM roles and users listed.
+   - Go to the `Access` section and check the IAM roles and users listed and you will see that it is created by the root user
 
    ![Access Section](https://github.com/mayaworld13/eks-votingapp/assets/127987256/420ef560-4b40-4560-b7e5-ce31ac76694b)
 
 2. **Add IAM Access Entry**
 
-   - Click on `Create access entry`.
+   - Click on `Create access entry`. 
 
    ![Create Access Entry](https://github.com/mayaworld13/eks-votingapp/assets/127987256/df00f9b0-20ac-49bd-863b-a826ccb73f7e)
 
@@ -228,6 +228,50 @@ Once the IAM access entry with `AmazonEKSClusterAdminPolicy` is added for your I
        ```
 
     ![accescluster](https://github.com/mayaworld13/eks-votingapp/assets/127987256/94456159-c51a-49f5-ba24-9b4fb4e071ce)
+
+
+## Step 8: Troubleshoot Access Error from EC2
+
+If you face an "Unauthorized" error accessing your EKS cluster from EC2, follow these steps to resolve it:
+
+![IAM Access Policy](https://github.com/mayaworld13/eks-votingapp/assets/127987256/3d5dcfbe-9b0a-4d43-8dc5-c1d857ef776f)   
+
+1. **Review IAM Access Policy**
+
+   - Check the IAM access policy attached to your EC2 instance in the IAM Management Console, update the `kubeconfig` file with the following role:
+
+     ```json
+     {
+       "Version": "2012-10-17",
+       "Statement": [{
+           "Effect": "Allow",
+           "Action": [
+               "eks:DescribeCluster",
+               "eks:ListClusters",
+               "eks:DescribeNodegroup",
+               "eks:ListNodegroups",
+               "eks:ListUpdates",
+               "eks:AccessKubernetesApi"
+           ],
+           "Resource": "*"
+       }]
+     }
+     ```
+
+   - Edit the `configmap` with the IAM role ARN accessible from your local machine:
+
+     ```bash
+     kubectl edit configmap aws-auth --namespace kube-system
+     ```
+
+   ![Edit ConfigMap](https://github.com/mayaworld13/eks-votingapp/assets/127987256/e57091e4-7398-4bbe-8b56-8ff668a929e0)
+
+   - Save and verify access to the cluster from EC2.
+
+   ![Verify Access](https://github.com/mayaworld13/eks-votingapp/assets/127987256/1081bf47-dc5f-4dd1-91e9-2f5aa90ce241)
+
+Following these steps should resolve the "Unauthorized" error and enable access to your EKS cluster from EC2 using the configured IAM access policy.
+
 
 
 
