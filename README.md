@@ -68,9 +68,24 @@ To deploy and manage this application effectively, we leverage Kubernetes and a 
 
 ## Step 3: Finalize and Create
 
-- Review your configurations and make sure everything is correct.
-- Leave the remaining settings as default.
-- Click on `Create Cluster`.
+ - Review your configurations and make sure everything is correct.
+ - Leave the remaining settings as default.
+ - Click on `Create Cluster`.
+
+## Step 4: Addons EBS
+
+1. **Add EBS CSI Driver**
+
+   - Once your cluster is created, go to the `Addons` section.
+   - Click on `Get more addons` and select the `EBS CSI driver`.
+
+   ![EBS CSI Driver](https://github.com/mayaworld13/eks-votingapp/assets/127987256/d34bc953-97a6-4b13-8dfd-c726a758349c)
+
+2. **Install EBS CSI Driver**
+
+   - Click `Next`, then `Next` again, and finally `Create`.
+
+And that's it! Your EKS cluster now has the EBS CSI driver installed, enabling persistent volumes and PVCs.
 
 
 
