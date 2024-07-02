@@ -89,6 +89,62 @@ And that's it! Your EKS cluster now has the EBS CSI driver installed, enabling p
 
 
 
+1. **Create IAM Role for EC2**
+
+   - Use the following policy for the EC2 role:
+ 
+     ```json
+     {
+       "Version": "2012-10-17",
+       "Statement": [{
+           "Effect": "Allow",
+           "Action": [
+               "eks:DescribeCluster",
+               "eks:ListClusters",
+               "eks:DescribeNodegroup",
+               "eks:ListNodegroups",
+               "eks:ListUpdates",
+               "eks:AccessKubernetesApi"
+           ],
+           "Resource": "*"
+       }]
+     }
+
+2. **Install Kubectl and AWS CLI on EC2**:
+   - install kubectl
+   
+     ```bash
+     curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
+     chmod +x ./kubectl
+     sudo cp ./kubectl /usr/local/bin
+     export PATH=/usr/local/bin:$PATH
+     ```
+   - Verify kubectl installation
+     ```bash
+     kubectl version --client
+     ```
+   - Install AWScli:
+     ```bash
+     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+     unzip awscliv2.zip
+     sudo ./aws/install
+     ```
+   - Verify AWS CLI installation
+     ```bash
+     aws --version
+     ```
+3. **Configure EKS Cluster Context**
+   - Once the Cluster is ready run the command to set context:
+
+     ```bash
+     aws eks update-kubeconfig --name EKS_CLUSTER_NAME --region us-east-1
+     ```
+   - To check the nodes in your cluster run
+
+     ```bash
+     kubectl get nodes
+     ```
+
 
 
 
