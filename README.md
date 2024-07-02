@@ -178,6 +178,59 @@ Follow these instructions to set up your project on an EC2 instance:
      kubectl get nodes
      ```
 
+## Step 7: Troubleshoot Error When Accessing EKS from Local Machine
+
+If you encounter the "Unauthorized" error when trying to access your EKS cluster from EC2 or your local machine, follow these steps to troubleshoot and resolve the issue:
+
+1. **Check IAM Access Entry in EKS Cluster**
+
+   - Navigate to the EKS Console and select your cluster.
+   - Go to the `Access` section and check the IAM roles and users listed.
+
+   ![Access Section](https://github.com/mayaworld13/eks-votingapp/assets/127987256/420ef560-4b40-4560-b7e5-ce31ac76694b)
+
+2. **Add IAM Access Entry**
+
+   - Click on `Create access entry`.
+
+   ![Create Access Entry](https://github.com/mayaworld13/eks-votingapp/assets/127987256/df00f9b0-20ac-49bd-863b-a826ccb73f7e)
+
+   - Select your IAM user from the dropdown under IAM principal ARN (e.g., `mayank`) and copy the ARN of your user.
+
+   ![IAM User ARN](https://github.com/mayaworld13/eks-votingapp/assets/127987256/adf9b79c-a867-4f14-bf63-5b7a5e61884f)
+
+3. **Configure IAM Access**
+
+   - Paste the ARN of your IAM user in the `Username` section.
+   - Click `Next`.
+
+4. **Add Permissions**
+
+   - Add the `AmazonEKSClusterAdminPolicy` to your IAM user.
+   
+   ![Add Policy](https://github.com/mayaworld13/eks-votingapp/assets/127987256/2ac2ce1b-431d-49d5-bbfb-663fc3ded8b1)
+
+5. **Review and Create**
+
+   - Review the settings and click `Create` to add the IAM access entry.
+
+Once the IAM access entry with `AmazonEKSClusterAdminPolicy` is added for your IAM user, retry accessing your EKS cluster from your local machine or EC2 instance. The "Unauthorized" error should be resolved.
+
+6. **Verification**
+
+   - update the context
+     ```bash
+      aws eks update-kubeconfig --name voting-cluster-mayank --region us-east-1
+     ```
+   -  Lets check it worked or not
+       ```bash
+        kubectl get nodes
+       ```
+
+    ![accescluster](https://github.com/mayaworld13/eks-votingapp/assets/127987256/94456159-c51a-49f5-ba24-9b4fb4e071ce)
+
+
+
 
 
 
