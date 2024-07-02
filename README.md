@@ -88,6 +88,39 @@ To deploy and manage this application effectively, we leverage Kubernetes and a 
 And that's it! Your EKS cluster now has the EBS CSI driver installed, enabling persistent volumes and PVCs.
 
 
+## Step 5: Create Nodegroup (2 nodes of t2.medium instance type)
+
+1. **Name your Nodegroup and Node IAM Role**
+
+   - Navigate to the EKS Console and select your cluster.
+   - Click on `Add node group`.
+     
+   ![Create Nodegroup](https://github.com/mayaworld13/eks-votingapp/assets/127987256/0c1129b2-0457-4453-96c6-13220ce22b59)
+
+2. **Create Node IAM Role**
+
+   - Choose `Create a new IAM role`.
+   - Select the following permissions for your Node IAM role:
+
+   ![Nodeiamrole](https://github.com/mayaworld13/eks-votingapp/assets/127987256/7b87ae42-7e06-4b3d-a0da-581ce3546333)
+
+3. **Select Instance Configuration**
+
+   - Click `Next` and select `Amazon Linux 2` as the AMI type.
+   - Choose `t2.medium` as the instance type.
+   - Leave the rest of the configurations as default.
+   - Click `Next`, review the settings, and then click `Create`.
+
+   ![Instance Configuration](https://github.com/mayaworld13/eks-votingapp/assets/127987256/9efa1e63-4287-4a7a-a5b9-4a5ad80f5697)
+
+4. **Wait for Nodegroup Creation**
+
+   - The nodegroup creation process may take a few minutes. Once complete, your EKS cluster will have a nodegroup with two `t2.medium` instances.
+  
+
+## Step 6: Set Up Project in EC2 t2.micro
+
+Follow these instructions to set up your project on an EC2 instance:
 
 1. **Create IAM Role for EC2**
 
